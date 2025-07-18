@@ -1,0 +1,25 @@
+{
+  "name": "@marketplace/daka",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "daisyui": "^5.0.46",
+    "sst": "^3",
+    "vite": "^7.0.4"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "alpinejs": "^3.14.9",
+    "alpinejs-i18n": "^2.5.3",
+    "external-svg-loader": "^1.7.1",
+    "htmx.org": "^2.0.6",
+    "pinecone-router": "^7.2.0",
+    "tailwindcss": "^4.1.11",
+    "vite-plugin-html": "^3.2.2"
+  }
+}

@@ -1,0 +1,15 @@
+package categories
+
+
+templ Cards(list []Category) {
+
+for _, item := range list {
+<li>
+<span>{item.Name}</span>
+<span>{item.Description}</span>
+<span>{item.Icon}</span>
+<span>{item.Image}</span>
+
+</li>
+      }
+}

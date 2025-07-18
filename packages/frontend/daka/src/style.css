@@ -1,0 +1,60 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: "daka";
+  default: true; /* Set as default theme */
+  prefersdark: false; /* Set dark mode for prefers-color-scheme: dark */
+  color-scheme: light; /* Defines the color of browser UI */
+
+  --color-base-100: oklch(99.5% 0.002 280);
+  --color-base-200: oklch(0.8965 0.1804 98.53);
+  --color-base-300: oklch(90% 0.008 280);
+  --color-base-content: oklch(20% 0.005 280);
+  --color-primary: oklch(0.8965 0.1804 98.53);
+  --color-primary-content: oklch(20% 0.005 280);
+  --color-secondary: oklch(50% 0.005 280);
+  --color-accent: oklch(70% 0.05 280);
+  --color-accent-content: oklch(20% 0.005 280);
+  --color-neutral: oklch(30% 0.005 280);
+  --color-neutral-content: oklch(99.5% 0.002 280);
+  --color-info: oklch(70% 0.05 200);
+  --color-info-content: oklch(20% 0.005 280);
+  --color-success: oklch(60% 0.05 150);
+  --color-success-content: oklch(20% 0.005 280);
+  --color-warning: oklch(70% 0.09 70);
+  --color-warning-content: oklch(20% 0.005 280);
+  --color-error: oklch(70% 0.09 20);
+  --color-error-content: oklch(20% 0.005 280);
+
+  /* Border Radius */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+
+  /* Base Sizes */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  /* Border Size */
+  --border: 1px;
+
+  /* Effects */
+  --depth: 1;
+  --noise: 0;
+}
+
+.logo {
+  background-image: url("../assets/logo.webp");
+  background-position: center center;
+}
+
+.banner-bg {
+  background-image: url("/banner.webp");
+  background-position: center top;
+  background-size: contain;
+  background-repeat: no-repeat;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}

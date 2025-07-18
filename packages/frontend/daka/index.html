@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" data-theme="daka">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="/src/style.css" rel="stylesheet">
+  <script type="module" src="/src/main.js"></script>
+  <title>Vite App</title>
+</head>
+<body class="flex flex-col gap-0" x-init="">
+
+<header class="sticky top-0 z-11">
+  <nav class="navbar shadow-sm bg-primary py-1 px-2 flex gap-2 justify-between">
+    <a class="link text-base-content link-neutral text-xl font-bold no-underline" href="#">
+      <picture>
+        <source srcset="logo.webp" type="image/webp">
+        <source srcset="logo.jpg" type="image/jpeg">
+        <img class="h-12 w-24 max-w-24" src="logo.jpg" alt="Logo"/>
+      </picture>
+    </a>
+
+    <label class="input bg-primary brightness-110 hover:brightness-80 w-full mx-16">
+      <input type="search" required placeholder="Search"/>
+      <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
+            fill="none"
+            stroke="currentColor"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </g>
+      </svg>
+    </label>
+
+    <button class="btn btn-circle btn-ghost">
+      <svg x-bind:data-src="shoppingCartUrl" data-cache="21600" class="size-5"></svg>
+    </button>
+  </nav>
+</header>
+
+<article class="banner-bg w-full flex flex-col h-full justify-center gap-2">
+
+ <div class="grid grid-cols-4 gap-2">
+   <div>
+     Hogar
+   </div>
+
+   <div>
+     ELECTRODOMÉSTICOS
+   </div>
+
+   <div>
+     TV - AUDIO
+   </div>
+
+   <div>
+     TECNOLOGÍA
+   </div>
+ </div>
+
+  <ul class="card bg-base-100 w-96 shadow-sm h-fit"
+      hx-get="/api/g/categories"
+      hx-trigger="load"
+      hx-swap="innerHTML">
+    <svg x-bind:data-src="loadingIconUrl"
+         class="size-7 motion-safe:animate-spin fill-primary dark:fill-primary-dark"></svg>
+
+  </ul>
+
+  <ul class="card bg-base-100 w-96 shadow-sm h-fit"
+      hx-get="/api/j/categories"
+      hx-trigger="load"
+      hx-swap="innerHTML">
+    <svg x-bind:data-src="loadingIconUrl"
+         class="size-7 motion-safe:animate-spin fill-primary dark:fill-primary-dark"></svg>
+
+  </ul>
+</article>
+
+</body>
+</html>

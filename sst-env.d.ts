@@ -20,7 +20,6 @@ declare module "sst" {
     "JavaService": {
       "service": string
       "type": "sst.aws.Service"
-      "url": string
     }
     "MyApi": {
       "name": string

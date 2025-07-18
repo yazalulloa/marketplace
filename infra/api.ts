@@ -15,11 +15,6 @@ const javaService = new sst.aws.Service("JavaService", {
   serviceRegistry: {
     port: 8080
   },
-  loadBalancer: {
-    rules: [
-      { listen: "8080/http" }
-    ]
-  }
 });
 
 

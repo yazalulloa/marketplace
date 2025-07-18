@@ -18,10 +18,6 @@ htmx.config.refreshOnHistoryMiss = true;
 import "./js/images.js"
 
 const isDev = import.meta.env.VITE_IS_DEV === 'true'
-console.log("isDev:", isDev);
-console.log("isDev:", import.meta.env.VITE_IS_DEV);
-console.log("VITE_GOLANG_API_URL:", import.meta.env.VITE_GOLANG_API_URL);
-
 
 window.withIsrPrefix = function (path) {
   return "/" + import.meta.env.VITE_ISR_PREFIX + path;
@@ -36,11 +32,15 @@ document.body.addEventListener('htmx:configRequest', async (evt) => {
     }
   }
 
-  if (evt.detail.path.includes("/api/")) {
+  if (isDev && evt.detail.path.includes("/api/")) {
     // evt.detail.withCredentials = true;
 
-    if (isDev) {
-      evt.detail.path = import.meta.env.VITE_GOLANG_API_URL.replaceAll("/api", "") + evt.detail.path;
+    if (evt.detail.path.startsWith("/api/j")) {
+      evt.detail.path = import.meta.env.VITE_JAVA_API_URL + evt.detail.path;
+    }
+
+    if (evt.detail.path.startsWith("/api/g")) {
+      evt.detail.path = import.meta.env.VITE_GOLANG_API_URL + evt.detail.path;
     }
   }
 

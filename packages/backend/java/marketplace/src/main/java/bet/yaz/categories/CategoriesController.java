@@ -11,11 +11,18 @@ import java.util.List;
 @Path("/api/j/categories")
 public class CategoriesController {
 
-  private final List<Categories> categoriesList = List.of(
-      new Categories("Sports", "All about sports", "sports-icon.png", "sports-image.jpg"),
-      new Categories("Technology", "Latest in tech", "tech-icon.png", "tech-image.jpg"),
-      new Categories("Health", "Wellness and health tips", "health-icon.png", "health-image.jpg")
-  );
+  private int counter = 0;
+
+  private List<Categories> categoriesList() {
+
+    return List.of(
+        new Categories("Sports", "All about sports", "sports-icon.png", "sports-image.jpg"),
+        new Categories("Technology", "Latest in tech", "tech-icon.png", "tech-image.jpg"),
+        new Categories("Health", "Wellness and health tips", "health-icon.png", "health-image.jpg"),
+        new Categories("Travel " + (++counter), "Explore the world", "travel-icon.png", "travel-image.jpg")
+    );
+  }
+
 
   @CheckedTemplate
   public static class Templates {
@@ -26,7 +33,7 @@ public class CategoriesController {
   @GET
   @Produces(MediaType.TEXT_HTML)
   public TemplateInstance get() {
-    return Templates.list(categoriesList);
+    return Templates.list(categoriesList());
   }
 
 

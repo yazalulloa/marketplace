@@ -5,6 +5,7 @@
 interface ImportMetaEnv {
   readonly VITE_IS_DEV: string
   readonly VITE_GOLANG_API_URL: string
+  readonly VITE_JAVA_API_URL: string
 }
 interface ImportMeta {
   readonly env: ImportMetaEnv

@@ -3,7 +3,9 @@ import {isLocal} from "./util";
 import {allowedOrigins, myRouter} from "./domain";
 
 const vpc = new sst.aws.Vpc("MyVpc");
-const cluster = new sst.aws.Cluster("MyCluster", { vpc });
+const cluster = new sst.aws.Cluster("MyCluster", {vpc});
+
+const javaServicePort = 8080;
 
 const javaService = new sst.aws.Service("JavaService", {
   cluster,
@@ -13,10 +15,21 @@ const javaService = new sst.aws.Service("JavaService", {
   },
   capacity: "spot",
   serviceRegistry: {
-    port: 8080
+    port: javaServicePort
   },
+  loadBalancer: isLocal ? {
+    rules: [
+      {listen: `${javaServicePort}/http`},
+    ]
+  } : undefined,
+  dev: {
+    url: `http://localhost:${javaServicePort}`,
+    command: "quarkus dev", // Your local dev command here
+  },
+  environment: {
+    JAVA_SERVICE_PORT: javaServicePort.toString(),
+  }
 });
-
 
 
 export const myApi = new sst.aws.Function("MyApi", {
@@ -64,16 +77,14 @@ api.route("POST /api/g/{proxy+}", golangApi.arn);
 api.route("PUT /api/g/{proxy+}", golangApi.arn);
 api.route("DELETE /api/g/{proxy+}", golangApi.arn);
 
-api.routePrivate("GET /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
-api.routePrivate("POST /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
-api.routePrivate("PUT /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
-api.routePrivate("DELETE /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
 
-//
-// api.route("GET /api/j/{proxy+}", javaService.url);
-// api.route("POST /api/j/{proxy+}", javaService.url);
-// api.route("PUT /api/j/{proxy+}", javaService.url);
-// api.route("DELETE /api/j/{proxy+}", javaService.url);
+if (!isLocal) {
+
+  api.routePrivate("GET /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
+  api.routePrivate("POST /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
+  api.routePrivate("PUT /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
+  api.routePrivate("DELETE /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
+}
 
 
 export const dakaWebApp = new sst.aws.StaticSite("DakaWebApp", {
@@ -85,6 +96,7 @@ export const dakaWebApp = new sst.aws.StaticSite("DakaWebApp", {
   environment: {
     VITE_IS_DEV: isLocal.toString(),
     VITE_GOLANG_API_URL: api.url,
+    VITE_JAVA_API_URL: isLocal ? javaService.url : undefined,
   },
   build: {
     command: "bun run build",

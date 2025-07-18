@@ -5,8 +5,8 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, process.cwd(), '');
 
-  console.log("VITE_IS_DEV:", env.VITE_IS_DEV);
   console.log("VITE_GOLANG_API_URL:", env.VITE_GOLANG_API_URL);
+  console.log("VITE_JAVA_API_URL:", env.VITE_JAVA_API_URL);
 
   return {
     // root: 'src', // Assuming your source files are in the 'src' directory

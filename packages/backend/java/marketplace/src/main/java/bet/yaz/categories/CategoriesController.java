@@ -8,7 +8,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/api/j/categories")
+@Path("categories")
 public class CategoriesController {
 
   private int counter = 0;

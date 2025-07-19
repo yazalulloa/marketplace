@@ -16,6 +16,7 @@ htmx.config.historyCacheSize = 0;
 htmx.config.refreshOnHistoryMiss = true;
 
 import "./js/images.js"
+import "./js/partials.js"
 
 const isDev = import.meta.env.VITE_IS_DEV === 'true'
 

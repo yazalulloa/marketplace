@@ -23,11 +23,11 @@
       <input type="search" required placeholder="Search"/>
       <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <g
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            stroke-width="2.5"
-            fill="none"
-            stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2.5"
+                fill="none"
+                stroke="currentColor"
         >
           <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.3-4.3"></path>
@@ -41,50 +41,41 @@
   </nav>
 </header>
 
-<article class="banner-bg w-full flex flex-col h-full justify-center gap-2">
+<article class="w-full flex flex-col h-full justify-center gap-2">
 
-  <div class="grid gap-2 bg-transparent p-12 flex flex-col items-center justify-center">
+  <div class="banner-bg">
+    <div class="gap-2 bg-transparent p-12 flex flex-col items-center justify-center">
+      <div class="pb-80"></div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
 
-      <div class="card bg-white text-primary-content shadow-xl">
-        <div class="card-body text-center">
-          <h3 class="card-title justify-center">HOGAR</h3>
-        <figure>
-          <img src="https://tiendasdaka.com/img/linea/HOGAR.png" class="w-full h-48 object-cover"/>
-        </figure>
-        </div>
-      </div>
+        <div x-bind:hx-get="partials.categoriesPartialUrl"
+             hx-trigger="load"
+             hx-swap="outerHTML">
 
-      <div class="card bg-white text-primary-content shadow-xl">
-        <div class="card-body text-center">
-          <h3 class="card-title justify-center">ELECTRODOMÉSTICOS</h3>
-          <figure>
-            <img src="https://tiendasdaka.com/img/linea/ELECTRODOM%C3%89STICOS.png" class="w-full h-48 object-cover"/>
-          </figure>
-        </div>
-      </div>
-
-      <div class="card bg-white text-primary-content shadow-xl">
-        <div class="card-body text-center">
-          <h3 class="card-title justify-center">TV - AUDIO</h3>
-          <figure>
-            <img src="https://tiendasdaka.com/img/linea/TV%20-%20AUDIO.png"  class="w-full h-48 object-cover"/>
-          </figure>
-        </div>
-      </div>
-
-      <div class="card bg-white text-primary-content shadow-xl">
-        <div class="card-body text-center">
-          <h3 class="card-title justify-center">TECNOLOGÍA</h3>
-          <figure>
-            <img src="https://tiendasdaka.com/img/linea/TECNOLOG%C3%8DA.png"  class="w-full h-48 object-cover"/>
-          </figure>
         </div>
       </div>
     </div>
   </div>
 
+
+  <ul class="card bg-base-100 w-96 shadow-sm h-fit hidden"
+      asd-hx-get="/api/g/categories"
+      hx-trigger="load"
+      hx-swap="innerHTML">
+    <svg x-bind:data-src="loadingIconUrl"
+         class="size-7 motion-safe:animate-spin fill-primary dark:fill-primary-dark"></svg>
+
+  </ul>
+
+  <ul class="card bg-base-100 w-96 shadow-sm h-fit hidden"
+      asd-hx-get="/api/j/categories"
+      hx-trigger="load"
+      hx-swap="innerHTML">
+    <svg x-bind:data-src="loadingIconUrl"
+         class="size-7 motion-safe:animate-spin fill-primary dark:fill-primary-dark"></svg>
+
+  </ul>
 </article>
 
 </body>

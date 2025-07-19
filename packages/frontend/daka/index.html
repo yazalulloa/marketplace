@@ -43,8 +43,6 @@
 
 <article class="banner-bg w-full flex flex-col h-full justify-center gap-2">
 
-  <div class="h-36"></div>
-
   <div class="grid gap-2 bg-transparent p-12 flex flex-col items-center justify-center">
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
@@ -52,50 +50,41 @@
       <div class="card bg-white text-primary-content shadow-xl">
         <div class="card-body text-center">
           <h3 class="card-title justify-center">HOGAR</h3>
-          <p>HOGAR</p>
+        <figure>
+          <img src="https://tiendasdaka.com/img/linea/HOGAR.png" class="w-full h-48 object-cover"/>
+        </figure>
         </div>
       </div>
 
       <div class="card bg-white text-primary-content shadow-xl">
         <div class="card-body text-center">
           <h3 class="card-title justify-center">ELECTRODOMÉSTICOS</h3>
-          <p>ELECTRODOMÉSTICOS</p>
+          <figure>
+            <img src="https://tiendasdaka.com/img/linea/ELECTRODOM%C3%89STICOS.png" class="w-full h-48 object-cover"/>
+          </figure>
         </div>
       </div>
 
       <div class="card bg-white text-primary-content shadow-xl">
         <div class="card-body text-center">
           <h3 class="card-title justify-center">TV - AUDIO</h3>
-          <p>TV - AUDIO</p>
+          <figure>
+            <img src="https://tiendasdaka.com/img/linea/TV%20-%20AUDIO.png"  class="w-full h-48 object-cover"/>
+          </figure>
         </div>
       </div>
 
       <div class="card bg-white text-primary-content shadow-xl">
         <div class="card-body text-center">
           <h3 class="card-title justify-center">TECNOLOGÍA</h3>
-          <p>TECNOLOGÍA</p>
+          <figure>
+            <img src="https://tiendasdaka.com/img/linea/TECNOLOG%C3%8DA.png"  class="w-full h-48 object-cover"/>
+          </figure>
         </div>
       </div>
     </div>
   </div>
 
-  <ul class="card bg-base-100 w-96 shadow-sm h-fit"
-      hx-get="/api/g/categories"
-      hx-trigger="load"
-      hx-swap="innerHTML">
-    <svg x-bind:data-src="loadingIconUrl"
-         class="size-7 motion-safe:animate-spin fill-primary dark:fill-primary-dark"></svg>
-
-  </ul>
-
-  <ul class="card bg-base-100 w-96 shadow-sm h-fit"
-      hx-get="/api/j/categories"
-      hx-trigger="load"
-      hx-swap="innerHTML">
-    <svg x-bind:data-src="loadingIconUrl"
-         class="size-7 motion-safe:animate-spin fill-primary dark:fill-primary-dark"></svg>
-
-  </ul>
 </article>
 
 </body>

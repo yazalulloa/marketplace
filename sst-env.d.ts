@@ -22,14 +22,17 @@ declare module "sst" {
       "type": "sst.aws.Service"
       "url": string
     }
-    "MyApi": {
-      "name": string
-      "type": "sst.aws.Function"
-      "url": string
-    }
     "MyBucket": {
       "name": string
       "type": "sst.aws.Bucket"
+    }
+    "MyDatabase": {
+      "database": string
+      "host": string
+      "password": string
+      "port": number
+      "type": "sst.aws.Mysql"
+      "username": string
     }
     "MyRouter": {
       "type": "sst.aws.Router"

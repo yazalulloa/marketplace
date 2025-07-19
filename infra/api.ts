@@ -2,13 +2,27 @@ import {bucket, webAssetsBucket} from "./storage";
 import {isLocal} from "./util";
 import {allowedOrigins, myRouter} from "./domain";
 
-const vpc = new sst.aws.Vpc("MyVpc");
+const vpc = new sst.aws.Vpc("MyVpc", {
+  az: 2,
+});
+
+const database = new sst.aws.Mysql("MyDatabase", {
+  vpc,
+  dev: {
+    username: "root",
+    password: "password",
+    database: "local",
+    port: 3306
+  }
+});
+
 const cluster = new sst.aws.Cluster("MyCluster", {vpc});
 
 const javaServicePort = 8080;
 
 const javaService = new sst.aws.Service("JavaService", {
   cluster,
+  link: [webAssetsBucket, database],
   image: {
     context: "./packages/backend/java/marketplace",
     dockerfile: "Dockerfile.jvm"
@@ -31,12 +45,20 @@ const javaService = new sst.aws.Service("JavaService", {
   }
 });
 
+// const bcvTask = new sst.aws.Task("BcvTask", {
+//   cluster,
+//   link: [bucket],
+//   dev: {
+//     command: "node index.mjs",
+//   },
+// });
 
-export const myApi = new sst.aws.Function("MyApi", {
-  url: true,
-  link: [bucket],
-  handler: "packages/functions/src/api.handler"
-});
+
+// export const myApi = new sst.aws.Function("MyApi", {
+//   url: true,
+//   link: [bucket],
+//   handler: "packages/functions/src/api.handler"
+// });
 
 export const golangApi = new sst.aws.Function("GolangApi", {
   handler: "packages/backend/golang/marketplace/cmd/app/app.go",

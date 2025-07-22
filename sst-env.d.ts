@@ -9,6 +9,19 @@ declare module "sst" {
       "type": "sst.aws.ApiGatewayV2"
       "url": string
     }
+    "BcvBucket": {
+      "name": string
+      "type": "sst.aws.Bucket"
+    }
+    "BcvFunction": {
+      "name": string
+      "type": "sst.aws.Function"
+      "url": string
+    }
+    "BcvQueue": {
+      "type": "sst.aws.Queue"
+      "url": string
+    }
     "DakaWebApp": {
       "type": "sst.aws.StaticSite"
       "url": string
@@ -20,7 +33,6 @@ declare module "sst" {
     "JavaService": {
       "service": string
       "type": "sst.aws.Service"
-      "url": string
     }
     "MyBucket": {
       "name": string
@@ -40,6 +52,10 @@ declare module "sst" {
     }
     "MyVpc": {
       "type": "sst.aws.Vpc"
+    }
+    "ProcessBcvFile": {
+      "name": string
+      "type": "sst.aws.Function"
     }
     "WebAssetsBucket": {
       "name": string

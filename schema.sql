@@ -1,5 +1,3 @@
-USE marketplace;
-
 CREATE TABLE IF NOT EXISTS rates
 (
     id            BIGINT PRIMARY KEY,

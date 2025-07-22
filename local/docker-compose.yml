@@ -1,17 +1,13 @@
-
-
-
-
 services:
 
   db:
-    image: mysql
+    container_name: mysql_marketplace
+    image: mysql:8.4.5
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: marketplace
     ports:
-        - "3306:3306"
+      - '3306:3306'
     volumes:
       - ./mysql:/var/lib/mysql
-

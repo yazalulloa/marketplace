@@ -1,33 +1,19 @@
-import {bucket, webAssetsBucket} from "./storage";
+import {bcvBucket, database, webAssetsBucket} from "./storage";
 import {isLocal} from "./util";
 import {allowedOrigins, myRouter} from "./domain";
+import {cluster, vpc} from "./server";
 
-const vpc = new sst.aws.Vpc("MyVpc", {
-  az: 2,
-});
-
-const database = new sst.aws.Mysql("MyDatabase", {
-  vpc,
-  dev: {
-    username: "root",
-    password: "password",
-    database: "local",
-    port: 3306
-  }
-});
-
-const cluster = new sst.aws.Cluster("MyCluster", {vpc});
 
 const javaServicePort = 8080;
 
 const javaService = new sst.aws.Service("JavaService", {
   cluster,
-  link: [webAssetsBucket, database],
+  link: [webAssetsBucket, database, bcvBucket],
   image: {
     context: "./packages/backend/java/marketplace",
     dockerfile: "Dockerfile.jvm"
   },
-  capacity: "spot",
+  capacity: $app.stage === "production" ? undefined : "spot",
   serviceRegistry: {
     port: javaServicePort
   },
@@ -42,7 +28,7 @@ const javaService = new sst.aws.Service("JavaService", {
   },
   environment: {
     JAVA_SERVICE_PORT: javaServicePort.toString(),
-  }
+  },
 });
 
 // const bcvTask = new sst.aws.Task("BcvTask", {

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="/src/style.css" rel="stylesheet">
   <script type="module" src="/src/main.js"></script>
-  <title>Vite App</title>
+  <title>Daka-like App</title>
 </head>
 <body class="flex flex-col gap-0" x-init="">
 
@@ -44,18 +44,27 @@
 <article class="w-full flex flex-col h-full justify-center gap-2">
 
   <div class="banner-bg">
-    <div class="gap-2 bg-transparent p-12 flex flex-col items-center justify-center">
-      <div class="pb-80"></div>
+    <div class="gap-2  p-12 flex flex-col justify-center">
+      <div class="pb-80 w-full max-w-5xl mx-auto"></div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl mx-auto">
 
         <div x-bind:hx-get="partials.categoriesPartialUrl"
              hx-trigger="load"
              hx-swap="outerHTML">
-
         </div>
       </div>
     </div>
+
+    <div class="w-full bg-[#022852] text-white pt-4 pb-4 mt-10 text-center">
+      <p class="text-xl font-semibold">PENSADOS PARA TI</p>
+    </div>
+
+    <div x-bind:hx-get="partials.productCarouselPartialUrl"
+         hx-trigger="load"
+         hx-swap="outerHTML">
+    </div>
+
   </div>
 
 

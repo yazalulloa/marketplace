@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="/src/style.css" rel="stylesheet">
   <script type="module" src="/src/main.js"></script>
-  <title>Vite App</title>
+  <title>Daka-like App</title>
 </head>
 <body class="flex flex-col gap-0" x-init="">
 
@@ -23,11 +23,11 @@
       <input type="search" required placeholder="Search"/>
       <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <g
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            stroke-width="2.5"
-            fill="none"
-            stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2.5"
+                fill="none"
+                stroke="currentColor"
         >
           <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.3-4.3"></path>
@@ -41,28 +41,35 @@
   </nav>
 </header>
 
-<article class="banner-bg w-full flex flex-col h-full justify-center gap-2">
+<article class="w-full flex flex-col h-full justify-center gap-2">
 
- <div class="grid grid-cols-4 gap-2">
-   <div>
-     Hogar
-   </div>
+  <div class="banner-bg">
+    <div class="gap-2  p-12 flex flex-col justify-center">
+      <div class="pb-80 w-full max-w-5xl mx-auto"></div>
 
-   <div>
-     ELECTRODOMÉSTICOS
-   </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl mx-auto">
 
-   <div>
-     TV - AUDIO
-   </div>
+        <div x-bind:hx-get="partials.categoriesPartialUrl"
+             hx-trigger="load"
+             hx-swap="outerHTML">
+        </div>
+      </div>
+    </div>
 
-   <div>
-     TECNOLOGÍA
-   </div>
- </div>
+    <div class="w-full bg-[#022852] text-white pt-4 pb-4 mt-10 text-center">
+      <p class="text-xl font-semibold">PENSADOS PARA TI</p>
+    </div>
 
-  <ul class="card bg-base-100 w-96 shadow-sm h-fit"
-      hx-get="/api/g/categories"
+    <div x-bind:hx-get="partials.productCarouselPartialUrl"
+         hx-trigger="load"
+         hx-swap="outerHTML">
+    </div>
+
+  </div>
+
+
+  <ul class="card bg-base-100 w-96 shadow-sm h-fit hidden"
+      asd-hx-get="/api/g/categories"
       hx-trigger="load"
       hx-swap="innerHTML">
     <svg x-bind:data-src="loadingIconUrl"
@@ -70,8 +77,8 @@
 
   </ul>
 
-  <ul class="card bg-base-100 w-96 shadow-sm h-fit"
-      hx-get="/api/j/categories"
+  <ul class="card bg-base-100 w-96 shadow-sm h-fit hidden"
+      asd-hx-get="/api/j/categories"
       hx-trigger="load"
       hx-swap="innerHTML">
     <svg x-bind:data-src="loadingIconUrl"

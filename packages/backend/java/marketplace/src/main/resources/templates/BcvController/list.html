@@ -1,0 +1,46 @@
+{@java.util.List<bet.yaz.bcv.Item> list}
+
+{#for item in list}
+    <li id="{item.cardId}"
+        class="fade-me-in fade-me-out">
+
+        <a
+                href="{item.item.url}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-start link link-hover"
+        >
+            {item.item.name}
+        </a>
+        <span class="text-end">{item.item.sizeFormatted}</span>
+        <span>{item.item.etag}</span>
+
+            {#include fragments/spanFormatDate.html date = item.item.processedAt /}
+
+        <span class="flex">
+      		<span x-text="$t('main-title-sheets')"></span>
+      			<span>:&nbsp;</span>
+      			<span class="w-[2.5em] inline-block text-start">{item.item.numOfSheets}</span>
+      	</span>
+
+        <div class="flex flex-row gap-4 justify-center">
+            <button
+                    type="button"
+                    class="btn btn-sm btn-ghost btn-circle btn-outline"
+                    hx-post="/api/j/process/{item.key}"
+                    hx-disabled-elt="this"
+                    hx-indicator=".htmx-indicator"
+                    hx-swap="none"
+                    hx-trigger="mousedown"
+                    data-recaptcha-action="bcv_bucket_process"
+            >
+                <svg x-bind:data-src="processIconUrl" data-cache="21600" class="h-6 w-6"></svg>
+            </button>
+
+            {#include fragments/delete-btn deleteUrl = uri:BcvController.delete(item.key)  cardId = item.cardId}
+                {#extraAttributes}
+                {/extraAttributes}
+            {/include}
+        </div>
+    </li>
+{/for}

@@ -1,26 +1,37 @@
 package bet.yaz.rates;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
 
 @Jacksonized
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonNaming(SnakeCaseStrategy.class)
 @Builder
-public record Rate(
-    long id,
-    String fromCurrency,
-    String toCurrency,
-    double rate,
-    String source,
-    LocalDate dateOfRate,
-    ZonedDateTime dateOfFile,
-    ZonedDateTime createdAt,
-    String etag,
-    String lastModified
-) {
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Rate {
+
+  @Id
+  private long id;
+  private String fromCurrency;
+  private String toCurrency;
+  private double rate;
+  private String source;
+  private LocalDate dateOfRate;
+  private ZonedDateTime dateOfFile;
+  private LocalDateTime createdAt;
+  private String etag;
+  private long lastModified;
 
 }

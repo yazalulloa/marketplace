@@ -2,8 +2,8 @@ package bet.yaz.core.bean;
 
 import bet.yaz.core.util.RxUtil;
 import io.quarkus.runtime.Startup;
+import io.vertx.mutiny.core.Vertx;
 import jakarta.enterprise.context.ApplicationScoped;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,15 +12,16 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class StartupBean {
 
-  @Startup(value = 0)
-  void init(io.vertx.mutiny.core.Vertx vertx) {
-    RxUtil.configureSchedulers(vertx.getDelegate());
+  private final Vertx vertx;
 
+  @Startup(value = 0)
+  void init() {
+    RxUtil.configureSchedulers(vertx.getDelegate());
 
     final var map = System.getenv();
     map.forEach((key, value) -> {
 
-      if (key.startsWith("SST") || key.startsWith("AWS")) {
+      if (key.startsWith("SST") || key.startsWith("AWS") || key.startsWith("APP")) {
         log.info(key + ": " + value);
       }
     });

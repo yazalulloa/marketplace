@@ -22,6 +22,7 @@ export const bcvQueue = new sst.aws.Queue("BcvQueue", {
 });
 
 export const processBcvFileFunction = new sst.aws.Function("ProcessBcvFile", {
+  url: true,
   link: [bcvBucket, bcvQueue],
   runtime: "go",
   handler: "packages/backend/golang/marketplace/cmd/process-bcv-file/process-bcv-file.go",

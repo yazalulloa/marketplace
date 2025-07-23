@@ -91,6 +91,7 @@ public class BcvController extends HxController {
                           .key(s3Object.key())
                           .cardId("bcv-s3-obj-" + UUID.randomUUID())
                           .item(S3FileInfo.builder()
+                              .name(s3Object.key())
                               .size(s3Object.size())
                               .sizeFormatted(FileUtil.byteCountToDisplaySize(s3Object.size()))
                               .etag(s3Object.eTag())

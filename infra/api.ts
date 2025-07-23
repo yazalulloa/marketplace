@@ -4,32 +4,37 @@ import {allowedOrigins, myRouter} from "./domain";
 import {cluster, vpc} from "./server";
 
 
-const javaServicePort = 8080;
+// const javaServicePort = 8080;
 
-const javaService = new sst.aws.Service("JavaService", {
-  cluster,
-  link: [webAssetsBucket, database, bcvBucket],
-  image: {
-    context: "./packages/backend/java/marketplace",
-    dockerfile: "Dockerfile.jvm"
-  },
-  capacity: $app.stage === "production" ? undefined : "spot",
-  serviceRegistry: {
-    port: javaServicePort
-  },
-  loadBalancer: isLocal ? {
-    rules: [
-      {listen: `${javaServicePort}/http`},
-    ]
-  } : undefined,
-  dev: {
-    url: `http://localhost:${javaServicePort}`,
-    command: "quarkus dev", // Your local dev command here
-  },
-  environment: {
-    JAVA_SERVICE_PORT: javaServicePort.toString(),
-  },
-});
+// export const javaService = new sst.aws.Service("JavaService", {
+//   cluster,
+//   link: [webAssetsBucket, database, bcvBucket],
+//   image: {
+//     context: "./packages/backend/java/marketplace",
+//     dockerfile: "Dockerfile.jvm"
+//   },
+//   capacity: $app.stage === "production" ? undefined : "spot",
+//   serviceRegistry: {
+//     port: javaServicePort
+//   },
+//   loadBalancer: isLocal ? {
+//     rules: [
+//       {listen: `${javaServicePort}/http`},
+//     ]
+//   } : undefined,
+//   dev: {
+//     url: `http://localhost:${javaServicePort}`,
+//     command: "quarkus dev", // Your local dev command here
+//   },
+//   environment: {
+//     JAVA_SERVICE_PORT: javaServicePort.toString(),
+//     APP_DB_USERNAME: database.username,
+//     APP_DB_PASSWORD: database.password,
+//     APP_DB_HOST: database.host,
+//     APP_DB_PORT: database.port.apply(v => `${v}`),
+//     APP_DB_NAME: database.database,
+//   },
+// });
 
 // const bcvTask = new sst.aws.Task("BcvTask", {
 //   cluster,
@@ -86,16 +91,37 @@ api.route("PUT /api/g/{proxy+}", golangApi.arn);
 api.route("DELETE /api/g/{proxy+}", golangApi.arn);
 
 
-if (!isLocal) {
+// if (!isLocal) {
+//
+//   api.routePrivate("GET /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
+//   api.routePrivate("POST /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
+//   api.routePrivate("PUT /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
+//   api.routePrivate("DELETE /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
+// }
 
-  api.routePrivate("GET /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
-  api.routePrivate("POST /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
-  api.routePrivate("PUT /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
-  api.routePrivate("DELETE /api/j/{proxy+}", javaService.nodes.cloudmapService.arn);
-}
+new sst.aws.Nextjs("DakaApp", {
+  path: "packages/frontend/daka-v2",
+  router: {
+    instance: myRouter,
+    // domain: subdomain("kyo-bot"),
+  },
+  environment: {
+    APP_IS_DEV: isLocal.toString(),
+    APP_API_URL: api.url,
+  },
+  transform: {
+    cdn: (args) => {
 
+      args.transform = {
+        distribution: (disArgs) => {
+          disArgs.httpVersion = "http2and3";
+        }
+      }
+    }
+  },
+});
 
-export const dakaWebApp = new sst.aws.StaticSite("DakaWebApp", {
+export const oldWebApp = new sst.aws.StaticSite("OldWebApp", {
   path: "packages/frontend/daka",
   router: {
     instance: myRouter,
@@ -104,7 +130,7 @@ export const dakaWebApp = new sst.aws.StaticSite("DakaWebApp", {
   environment: {
     VITE_IS_DEV: isLocal.toString(),
     VITE_GOLANG_API_URL: api.url,
-    VITE_JAVA_API_URL: isLocal ? javaService.url : undefined,
+    // VITE_JAVA_API_URL: isLocal ? javaService.url : undefined,
   },
   build: {
     command: "bun run build",

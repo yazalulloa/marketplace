@@ -22,17 +22,13 @@ declare module "sst" {
       "type": "sst.aws.Queue"
       "url": string
     }
-    "DakaWebApp": {
-      "type": "sst.aws.StaticSite"
+    "DakaApp": {
+      "type": "sst.aws.Nextjs"
       "url": string
     }
     "GolangApi": {
       "name": string
       "type": "sst.aws.Function"
-    }
-    "JavaService": {
-      "service": string
-      "type": "sst.aws.Service"
     }
     "MyBucket": {
       "name": string
@@ -53,9 +49,14 @@ declare module "sst" {
     "MyVpc": {
       "type": "sst.aws.Vpc"
     }
+    "OldWebApp": {
+      "type": "sst.aws.StaticSite"
+      "url": string
+    }
     "ProcessBcvFile": {
       "name": string
       "type": "sst.aws.Function"
+      "url": string
     }
     "WebAssetsBucket": {
       "name": string

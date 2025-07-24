@@ -109,6 +109,7 @@ new sst.aws.Nextjs("DakaApp", {
     APP_IS_DEV: isLocal.toString(),
     APP_API_URL: api.url,
   },
+  link: [database],
   transform: {
     cdn: (args) => {
 

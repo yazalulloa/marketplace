@@ -1,100 +1,58 @@
 "use client"
 
-import { useState } from "react"
+import {useState} from "react"
 import {CategoriesHeader} from "./header";
 import {CategoriesTable} from "./table";
 import {CategoriesFooter} from "./footer";
-import {Metadata} from "next";
-
-// Mock data for categories
-const mockCategories = [
-  {
-    id: 1,
-    name: "Electronics",
-    description: "Electronic devices and accessories",
-    image: "/placeholder.svg?height=40&width=40",
-    status: "active",
-  },
-  {
-    id: 2,
-    name: "Clothing",
-    description: "Fashion and apparel items",
-    image: "/placeholder.svg?height=40&width=40",
-    status: "active",
-  },
-  {
-    id: 3,
-    name: "Books",
-    description: "Educational and entertainment books",
-    image: "/placeholder.svg?height=40&width=40",
-    status: "inactive",
-  },
-  {
-    id: 4,
-    name: "Home & Garden",
-    description: "Home improvement and gardening supplies",
-    image: "/placeholder.svg?height=40&width=40",
-    status: "active",
-  },
-  {
-    id: 5,
-    name: "Sports",
-    description: "Sports equipment and fitness gear",
-    image: "/placeholder.svg?height=40&width=40",
-    status: "active",
-  },
-  {
-    id: 6,
-    name: "Toys",
-    description: "Children's toys and games",
-    image: "/placeholder.svg?height=40&width=40",
-    status: "inactive",
-  },
-  {
-    id: 7,
-    name: "Beauty",
-    description: "Cosmetics and personal care products",
-    image: "/placeholder.svg?height=40&width=40",
-    status: "active",
-  },
-  {
-    id: 8,
-    name: "Automotive",
-    description: "Car parts and automotive accessories",
-    image: "/placeholder.svg?height=40&width=40",
-    status: "active",
-  },
-]
+import { useCategories } from "@/hooks/use-categories"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default function Page() {
   const [searchTerm, setSearchTerm] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(5)
 
-  // Filter categories based on search term
-  const filteredCategories = mockCategories.filter(
-      (category) =>
-          category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          category.description.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  const { data, loading, error, deleteCategory, createCategory, updateCategory } = useCategories({
+    page: currentPage,
+    pageSize,
+    search: searchTerm,
+  })
 
-  // Calculate pagination
-  const totalItems = filteredCategories.length
-  const totalPages = Math.ceil(totalItems / pageSize)
-  const startIndex = (currentPage - 1) * pageSize
-  const endIndex = startIndex + pageSize
-  const currentCategories = filteredCategories.slice(startIndex, endIndex)
-
-  const handleEdit = (id: number) => {
+  const handleEdit = (id: string) => {
     console.log("Edit category:", id)
   }
 
-  const handleDelete = (id: number) => {
-    console.log("Delete category:", id)
+  const handleDelete = async (id: string) => {
+    if (confirm("Are you sure you want to delete this category?")) {
+      await deleteCategory(id)
+    }
   }
 
   const handleCreateCategory = () => {
-    console.log("Create new category")
+    createCategory({
+      name: "New Category",
+      description: "A new category description",
+      image: "/placeholder.svg?height=40&width=40",
+      status: "active",
+    })
+  }
+
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize)
+    setCurrentPage(1) // Reset to first page when changing page size
+  }
+
+  if (error) {
+    return (
+        <div className="min-h-screen bg-background">
+          <div className="container mx-auto px-4 py-8">
+            <Alert variant="destructive">
+              <AlertDescription>Error loading categories: {error}</AlertDescription>
+            </Alert>
+          </div>
+        </div>
+    )
   }
 
   return (
@@ -115,21 +73,43 @@ export default function Page() {
                 onCreateCategory={handleCreateCategory}
             />
 
-            {/* Categories Table */}
-            <CategoriesTable categories={currentCategories} onEdit={handleEdit} onDelete={handleDelete} />
+            {/* Loading State */}
+            {loading ? (
+                <div className="rounded-lg border bg-card p-6">
+                  <div className="space-y-4">
+                    {Array.from({ length: pageSize }).map((_, i) => (
+                        <div key={i} className="flex items-center space-x-4">
+                          <Skeleton className="h-10 w-10 rounded-md" />
+                          <div className="space-y-2 flex-1">
+                            <Skeleton className="h-4 w-[200px]" />
+                            <Skeleton className="h-4 w-[300px]" />
+                          </div>
+                          <div className="flex space-x-2">
+                            <Skeleton className="h-8 w-8" />
+                            <Skeleton className="h-8 w-8" />
+                          </div>
+                        </div>
+                    ))}
+                  </div>
+                </div>
+            ) : (
+                <>
+                  {/* Categories Table */}
+                  <CategoriesTable categories={data?.categories || []} onEdit={handleEdit} onDelete={handleDelete} />
 
-            {/* Categories Footer with Pagination */}
-            <CategoriesFooter
-                currentPage={currentPage}
-                totalPages={totalPages}
-                pageSize={pageSize}
-                totalItems={totalItems}
-                onPageChange={setCurrentPage}
-                onPageSizeChange={(newSize) => {
-                  setPageSize(newSize)
-                  setCurrentPage(1) // Reset to first page when changing page size
-                }}
-            />
+                  {/* Categories Footer with Pagination */}
+                  {data && (
+                      <CategoriesFooter
+                          currentPage={data.pagination.page}
+                          totalPages={data.pagination.totalPages}
+                          pageSize={data.pagination.pageSize}
+                          totalItems={data.pagination.total}
+                          onPageChange={setCurrentPage}
+                          onPageSizeChange={handlePageSizeChange}
+                      />
+                  )}
+                </>
+            )}
           </div>
         </div>
       </div>

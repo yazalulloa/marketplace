@@ -4,19 +4,12 @@ import { Edit, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-
-interface Category {
-  id: number
-  name: string
-  description: string
-  image: string
-  status: string
-}
+import {Category} from "../../../lib/model/categories";
 
 interface CategoriesTableProps {
   categories: Category[]
-  onEdit: (id: number) => void
-  onDelete: (id: number) => void
+  onEdit: (id: string) => void
+  onDelete: (id: string) => void
 }
 
 export function CategoriesTable({ categories, onEdit, onDelete }: CategoriesTableProps) {

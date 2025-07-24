@@ -17,7 +17,7 @@ export const database = new sst.aws.Mysql("MyDatabase", {
   dev: {
     username: "root",
     password: "password",
-    database: "local",
+    database: "marketplace",
     port: 3306
   }
 });

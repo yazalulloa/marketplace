@@ -8,17 +8,16 @@
   - [ ] Autenticación de dos factores (2FA) _(Opcional)_
 
 - [ ] **Tasas de cambio**
-   - [ ] **Tasas de cambio:** Reporte y tarea periodica de tasas de cambio. _(3 días)_
+   - [ ] **Tasas de cambio:** Reporte y tarea periodica de tasas de cambio del bcv. _(3 días)_
 
 
 - [ ] **Gestión de Inquilinos/Vendedores**
-    - [ ] **Categorias:** Crear/Editar/Eliminar/Reporte de categorías de productos. _(3 días)_
-    - [ ] **Productos:** Crear/Editar/Eliminar/Reporte de productos. _(3 días)_
-    - [ ] **Variaciones de Productos:** Crear/Editar/Eliminar/Reporte, inventario. _(3 días)_
-    - [ ] **Pedidos:** Ver/Editar/Reporte de pedidos. _(3 días)_
-    - [ ] **Pagos:** Ver/Editar/Reporte de pagos. _(3 días)_
-    - [ ] **Perfiles de Vendedor:** Perfiles públicos para 
-    - [ ] **Gestión de Pagos:** Sistema para guardar credenciales de pago por cada tipo de pago (pago móvil, pago directo, pago con tarjeta, etc). _(5 días)_
+    - [ ] **Categorias:** Crear/Editar/Eliminar/Reporte de categorías de productos. _(4 días)_
+    - [ ] **Productos:** Crear/Editar/Eliminar/Reporte de productos. _(4 días)_
+    - [ ] **Variaciones de Productos:** Crear/Editar/Eliminar/Reporte, inventario. _(4 días)_
+    - [ ] **Pedidos:** Ver/Editar/Reporte de pedidos. _(4 días)_
+    - [ ] **Pagos:** Ver/Editar/Reporte de pagos. _(4 días)_
+    - [ ] **Gestión de Pagos:** Sistema para guardar credenciales de pago por cada tipo de pago (pago móvil, pago directo, pago con tarjeta, etc). _(6 días)_
 
 - [ ] **Gestión de Inquilinos/Vendedores** _(Opcional)_
   - [ ] **Notificaciones:** Notificaciones por correo electrónico o en la aplicación para actualizaciones de pedidos, mensajes, etc. _(Opcional)_
@@ -32,7 +31,7 @@
 
 
 - [ ] **Gestión de Usuarios (Compradores)**
-    - [ ] **Carrito de compra:** Local si no hay inicio de sesion   
+    - [ ] **Carrito de compra:** Local si no hay inicio de sesion . _(4 días)_
 
 - [ ] **Gestión de Usuarios (Compradores)** _(Opcional)_
   - [ ] **Registro/Inicio de Sesión de Usuario:** Creación de cuenta y autenticación estándar.  _(Opcional)_

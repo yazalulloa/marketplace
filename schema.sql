@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS rates
 
 CREATE TABLE IF NOT EXISTS categories
 (
-    id          INTEGER AUTO_INCREMENT PRIMARY KEY,
+    id          TEXT PRIMARY KEY,
+#     tenant_id
     name        TEXT NOT NULL,
     description TEXT NOT NULL,
     image_url   TEXT NOT NULL,

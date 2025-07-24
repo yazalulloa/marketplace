@@ -65,6 +65,34 @@
          hx-swap="outerHTML">
     </div>
 
+    <div x-bind:hx-get="partials.bannerCarousel2PartialUrl"
+         hx-trigger="load"
+         hx-swap="outerHTML">
+    </div>
+
+    <div class="w-full bg-[#022852] text-white pt-4 pb-4 mt-10 text-center">
+      <p class="text-xl font-semibold">PRODUCTOS FAVORITOS</p>
+    </div>
+
+    <div x-bind:hx-get="partials.productCarouselPartialUrl"
+         hx-trigger="load"
+         hx-swap="outerHTML">
+    </div>
+
+    <div class="w-full bg-[#022852] text-white pt-4 pb-4 mt-10 text-center">
+      <p class="text-xl font-semibold">MARCAS ALIADAS</p>
+    </div>
+
+    <div x-bind:hx-get="partials.brandsCarouselPartialUrl"
+         hx-trigger="load"
+         hx-swap="outerHTML">
+    </div>
+
+    <div x-bind:hx-get="partials.infoCarouselPartialUrl"
+         hx-trigger="load"
+         hx-swap="outerHTML">
+    </div>
+
   </div>
 
 

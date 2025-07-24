@@ -48,7 +48,6 @@
     - [ ] **Detección de Fraude:** Mecanismos para identificar y prevenir actividades fraudulentas. _(Opcional)_
     - [ ] **Protección de bots:** Medidas para prevenir el acceso automatizado no autorizado a la plataforma. _(Opcional)_
 
-    
 
     
 - [ ] **Análisis e Informes** _(Opcional)_

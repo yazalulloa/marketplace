@@ -13,7 +13,7 @@
     - [ ] **Productos:** Crear/Editar/Eliminar/Reporte de productos. _(3 días)_
     - [ ] **Variaciones de Productos:** Crear/Editar/Eliminar/Reporte, inventario. _(3 días)_
     - [ ] **Pedidos:** Ver/Editar/Reporte de pedidos. _(3 días)_
-    - [ ] **Pedidos:** Ver/Editar/Reporte de pagos. _(3 días)_
+    - [ ] **Pagos:** Ver/Editar/Reporte de pagos. _(3 días)_
     - [ ] **Perfiles de Vendedor:** Perfiles públicos para 
     - [ ] **Gestión de Pagos:** Sistema para guardar credenciales de pago por cada tipo de pago (pago móvil, pago directo, pago con tarjeta, etc). _(5 días)_
 

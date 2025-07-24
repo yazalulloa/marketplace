@@ -14,11 +14,10 @@
     - [ ] **Variaciones de Productos:** Crear/Editar/Eliminar/Reporte, inventario. _(3 días)_
     - [ ] **Pedidos:** Ver/Editar/Reporte de pedidos. _(3 días)_
     - [ ] **Pedidos:** Ver/Editar/Reporte de pagos. _(3 días)_
-    - [ ] **Perfiles de Vendedor:** Perfiles públicos para cada vendedor con la información de su tienda, calificaciones y detalles de contacto. _(3 días)_
+    - [ ] **Perfiles de Vendedor:** Perfiles públicos para 
     - [ ] **Gestión de Pagos:** Sistema para guardar credenciales de pago por cada tipo de pago (pago móvil, pago directo, pago con tarjeta, etc). _(5 días)_
 
 - [ ] **Gestión de Inquilinos/Vendedores** _(Opcional)_
-  - [ ] **Personalización del Escaparate:** Opciones para que los vendedores personalicen la apariencia de su tienda (logotipo, banner, tema, colores). _(Opcional)_
   - [ ] **Notificaciones:** Notificaciones por correo electrónico o en la aplicación para actualizaciones de pedidos, mensajes, etc. _(Opcional)_
 
     

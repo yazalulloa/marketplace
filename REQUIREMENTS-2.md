@@ -7,6 +7,9 @@
   - [ ] Recuperación de contraseña _(Opcional)_
   - [ ] Autenticación de dos factores (2FA) _(Opcional)_
 
+- [ ] **Tasas de cambio**
+   - [ ] **Tasas de cambio:** Reporte y tarea periodica de tasas de cambio. _(3 días)_
+
 
 - [ ] **Gestión de Inquilinos/Vendedores**
     - [ ] **Categorias:** Crear/Editar/Eliminar/Reporte de categorías de productos. _(3 días)_

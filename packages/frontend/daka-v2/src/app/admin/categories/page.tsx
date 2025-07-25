@@ -1,117 +1,54 @@
-"use client"
+import {Suspense} from "react"
+import {findCategories} from "./actions";
+import {CategoriesPageContent} from "./content";
+import {LoadingSkeleton} from "./skeleton";
 
-import {useState} from "react"
-import {CategoriesHeader} from "./header";
-import {CategoriesTable} from "./table";
-import {CategoriesFooter} from "./footer";
-import { useCategories } from "@/hooks/use-categories"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Skeleton } from "@/components/ui/skeleton"
+interface SearchParams {
+  page?: string
+  pageSize?: string
+  search?: string
+}
 
-export default function Page() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize, setPageSize] = useState(5)
 
-  const { data, loading, error, deleteCategory, createCategory/*, updateCategory*/ } = useCategories({
-    page: currentPage,
-    pageSize,
-    search: searchTerm,
+type Props = Promise<SearchParams>
+
+// Separate component for categories data that can be suspended
+async function CategoriesData({props}: { props: Promise<SearchParams> }) {
+  const searchParams = await props
+  const page = Number(searchParams?.page) || 1
+  const pageSize = Number(searchParams?.pageSize) || 5
+  const search = searchParams?.search || ""
+
+  // Simulate loading time to demonstrate suspense
+  await new Promise((resolve) => setTimeout(resolve, 500))
+
+  // Fetch data directly in server component
+  const {categories, total} = await findCategories({
+    search,
+    limit: pageSize,
+    offset: (page - 1) * pageSize,
+    tenantId: "default",
   })
 
-  const handleEdit = (id: string) => {
-    console.log("Edit category:", id)
+  const pagination = {
+    page,
+    pageSize,
+    total,
+    totalPages: Math.ceil(total / pageSize),
   }
 
-  const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this category?")) {
-      await deleteCategory(id)
-    }
-  }
+  return <CategoriesPageContent initialCategories={categories} initialPagination={pagination} initialSearch={search}/>
+}
 
-  const handleCreateCategory = () => {
-    createCategory({
-      name: "New Category",
-      description: "A new category description",
-      image: "/placeholder.svg?height=40&width=40",
-      status: "active",
-    })
-  }
-
-  const handlePageSizeChange = (newSize: number) => {
-    setPageSize(newSize)
-    setCurrentPage(1) // Reset to first page when changing page size
-  }
-
-  if (error) {
-    return (
-        <div className="min-h-screen bg-background">
-          <div className="container mx-auto px-4 py-8">
-            <Alert variant="destructive">
-              <AlertDescription>Error loading categories: {error}</AlertDescription>
-            </Alert>
-          </div>
-        </div>
-    )
-  }
+export default function Page({
+                               searchParams,
+                             }: {
+  searchParams: Promise<SearchParams>
+}) {
 
   return (
-      <div className="w-full bg-background">
-
-        <div className="w-full mx-auto px-4 py-8">
-          <div className="space-y-6">
-            {/* Page Header */}
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight">Categories</h1>
-              <p className="text-muted-foreground">Manage your product categories</p>
-            </div>
-
-            {/* Categories Header with Search and Create Button */}
-            <CategoriesHeader
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-                onCreateCategory={handleCreateCategory}
-            />
-
-            {/* Loading State */}
-            {loading ? (
-                <div className="rounded-lg border bg-card p-6">
-                  <div className="space-y-4">
-                    {Array.from({ length: pageSize }).map((_, i) => (
-                        <div key={i} className="flex items-center space-x-4">
-                          <Skeleton className="h-10 w-10 rounded-md" />
-                          <div className="space-y-2 flex-1">
-                            <Skeleton className="h-4 w-[200px]" />
-                            <Skeleton className="h-4 w-[300px]" />
-                          </div>
-                          <div className="flex space-x-2">
-                            <Skeleton className="h-8 w-8" />
-                            <Skeleton className="h-8 w-8" />
-                          </div>
-                        </div>
-                    ))}
-                  </div>
-                </div>
-            ) : (
-                <>
-                  {/* Categories Table */}
-                  <CategoriesTable categories={data?.categories || []} onEdit={handleEdit} onDelete={handleDelete} />
-
-                  {/* Categories Footer with Pagination */}
-                  {data && (
-                      <CategoriesFooter
-                          currentPage={data.pagination.page}
-                          totalPages={data.pagination.totalPages}
-                          pageSize={data.pagination.pageSize}
-                          totalItems={data.pagination.total}
-                          onPageChange={setCurrentPage}
-                          onPageSizeChange={handlePageSizeChange}
-                      />
-                  )}
-                </>
-            )}
-          </div>
-        </div>
-      </div>
+      <Suspense fallback={<LoadingSkeleton rows={5}/>}>
+        <CategoriesData props={searchParams}/>
+      </Suspense>
   )
 }

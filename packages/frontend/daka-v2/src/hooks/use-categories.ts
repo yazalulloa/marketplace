@@ -1,7 +1,8 @@
 "use client"
 
 import {useEffect, useState} from "react"
-import type {Category} from "@marketplace/core/category"
+import {Categories} from "@marketplace/core/category";
+import Category = Categories.Category;
 
 interface UseCategoriesParams {
   page: number

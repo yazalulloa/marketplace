@@ -1,7 +1,6 @@
 {
-  "name": "daka-v2",
+  "name": "@marketplace/daka-v2",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -38,7 +37,6 @@
     "sst": "^3",
     "tailwindcss": "^4",
     "tsx": "^4.20.3",
-    "tw-animate-css": "^1.3.5",
-    "typescript": "^5"
+    "tw-animate-css": "^1.3.5"
   }
 }

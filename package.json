@@ -1,15 +1,21 @@
 {
   "name": "marketplace",
   "version": "0.0.0",
+  "sideEffects": false,
   "workspaces": [
-    "packages/*"
+    "packages/**/*"
   ],
-  "scripts": {},
+  "scripts": {
+    "db": "sst shell drizzle-kit"
+  },
   "devDependencies": {
     "@tsconfig/node22": "^22",
     "typescript": "^5"
   },
   "dependencies": {
+    "drizzle-kit": "^0.31.4",
+    "drizzle-orm": "^0.44.3",
+    "mysql2": "^3.14.2",
     "sst": "^3"
   }
 }

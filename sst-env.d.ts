@@ -26,9 +26,14 @@ declare module "sst" {
       "type": "sst.aws.Nextjs"
       "url": string
     }
+    "DatabaseMigrator": {
+      "name": string
+      "type": "sst.aws.Function"
+    }
     "GolangApi": {
       "name": string
       "type": "sst.aws.Function"
+      "url": string
     }
     "MyBucket": {
       "name": string

@@ -1,7 +1,9 @@
 package categories
 
 import (
+	"log"
 	"marketplace/internal/api"
+	"marketplace/internal/db"
 	"net/http"
 )
 
@@ -10,6 +12,13 @@ func Routes(holder *api.RouterHolder) {
 }
 
 func categoriesGet(w http.ResponseWriter, r *http.Request) {
+
+	err := db.GetDB().DB.Ping()
+	if err != nil {
+		log.Printf("Error executing Ping: %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 
 	array := []Category{
 		{
@@ -39,7 +48,7 @@ func categoriesGet(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Content-Type", "text/html; charset=utf-8")
-	err := Cards(array).Render(r.Context(), w)
+	err = Cards(array).Render(r.Context(), w)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

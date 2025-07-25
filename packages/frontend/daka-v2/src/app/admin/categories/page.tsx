@@ -13,7 +13,7 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(5)
 
-  const { data, loading, error, deleteCategory, createCategory, updateCategory } = useCategories({
+  const { data, loading, error, deleteCategory, createCategory/*, updateCategory*/ } = useCategories({
     page: currentPage,
     pageSize,
     search: searchTerm,

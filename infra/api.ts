@@ -52,8 +52,11 @@ import {cluster, vpc} from "./server";
 // });
 
 export const golangApi = new sst.aws.Function("GolangApi", {
+  vpc,
+  url: true,
   handler: "packages/backend/golang/marketplace/cmd/app/app.go",
   runtime: "go",
+  link: [database],
 })
 
 const api = new sst.aws.ApiGatewayV2("API", {
@@ -84,11 +87,11 @@ const api = new sst.aws.ApiGatewayV2("API", {
   },
 });
 
-myRouter.route("/api", api.url);
-api.route("GET /api/g/{proxy+}", golangApi.arn);
-api.route("POST /api/g/{proxy+}", golangApi.arn);
-api.route("PUT /api/g/{proxy+}", golangApi.arn);
-api.route("DELETE /api/g/{proxy+}", golangApi.arn);
+// myRouter.route("/api", api.url);
+// api.route("GET /api/g/{proxy+}", golangApi.arn);
+// api.route("POST /api/g/{proxy+}", golangApi.arn);
+// api.route("PUT /api/g/{proxy+}", golangApi.arn);
+// api.route("DELETE /api/g/{proxy+}", golangApi.arn);
 
 
 // if (!isLocal) {
@@ -100,6 +103,7 @@ api.route("DELETE /api/g/{proxy+}", golangApi.arn);
 // }
 
 new sst.aws.Nextjs("DakaApp", {
+  vpc,
   path: "packages/frontend/daka-v2",
   router: {
     instance: myRouter,

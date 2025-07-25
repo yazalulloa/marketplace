@@ -1,9 +1,12 @@
 import {type NextRequest, NextResponse} from "next/server"
-import {db} from "@/lib/db"
+
 import * as schema from '@/lib/model/schema.sql';
 import {eq} from 'drizzle-orm';
+import {db} from "@marketplace/core/mysql"
 
-export async function PUT(request: NextRequest, {params}: { params: { id: string } }) {
+
+export async function PUT(request: NextRequest,
+                          {params}: { params: { id: string } }) {
   try {
     const id = params.id
     const body = await request.json()
@@ -31,17 +34,14 @@ export async function PUT(request: NextRequest, {params}: { params: { id: string
   }
 }
 
-export async function DELETE(request: NextRequest, {params}: { params: { id: string } }) {
+export async function DELETE(/*request: NextRequest,*/ {params}: { params: { id: string } }) {
   try {
     const id = params.id
 
 
+    const result = await db.delete(schema.categories).where(eq(schema.categories.id, id))
 
-    const [result] = (await db.delete(schema.categories).where(eq(schema.categories.id, id))) as any[]
-
-    if (result.affectedRows === 0) {
-      return NextResponse.json({error: "Category not found"}, {status: 404})
-    }
+    console.log("Delete result:", result)
 
     return NextResponse.json({message: "Category deleted successfully"})
   } catch (error) {

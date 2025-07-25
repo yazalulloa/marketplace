@@ -1,22 +1,46 @@
 "use client"
-
+import { useState } from "react"
 import {Edit, Trash2} from "lucide-react"
 import {Button} from "@/components/ui/button"
 import {Badge} from "@/components/ui/badge"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
 import {Categories} from "@marketplace/core/category";
 import Category = Categories.Category;
+import {DeleteCategoryDialog} from "./delete-dialog";
 
 
 interface CategoriesTableProps {
   categories: Category[]
   onEdit: (id: string) => void
-  onDelete: (id: string) => void
+  onDelete: (id: string) => Promise<void>
   disabled?: boolean
+  isDeleting?: boolean
 }
 
-export function CategoriesTable({categories, onEdit, onDelete, disabled}: CategoriesTableProps) {
+export function CategoriesTable({categories, onEdit, onDelete, disabled, isDeleting }: CategoriesTableProps) {
+
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null)
+
+  const handleDeleteClick = (category: Category) => {
+    setCategoryToDelete(category)
+    setDeleteDialogOpen(true)
+  }
+
+  const handleDeleteConfirm = async (categoryId: string) => {
+    await onDelete(categoryId)
+    setDeleteDialogOpen(false)
+    setCategoryToDelete(null)
+  }
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false)
+    setCategoryToDelete(null)
+  }
+
+
   return (
+      <>
       <div className="rounded-lg border bg-card">
         <Table>
           <TableHeader>
@@ -66,7 +90,7 @@ export function CategoriesTable({categories, onEdit, onDelete, disabled}: Catego
                           <Button
                               variant="ghost"
                               size="sm"
-                              onClick={() => onDelete(category.id)}
+                              onClick={() => handleDeleteClick(category)}
                               disabled={disabled}
                               className="h-8 w-8 p-0 text-destructive hover:text-destructive"
                           >
@@ -81,5 +105,14 @@ export function CategoriesTable({categories, onEdit, onDelete, disabled}: Catego
           </TableBody>
         </Table>
       </div>
+
+        <DeleteCategoryDialog
+            category={categoryToDelete}
+            open={deleteDialogOpen}
+            onOpenChange={handleDeleteCancel}
+            onConfirm={handleDeleteConfirm}
+            isDeleting={isDeleting}
+        />
+      </>
   )
 }

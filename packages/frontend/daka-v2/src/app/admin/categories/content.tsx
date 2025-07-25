@@ -9,6 +9,7 @@ import {CategoriesTable} from "./table";
 import {CategoriesFooter} from "./footer";
 import {Categories} from "@marketplace/core/category";
 import Category = Categories.Category;
+import {LoadingSkeleton} from "./skeleton";
 interface CategoriesPageContentProps {
   initialCategories: Category[]
   initialPagination: {
@@ -28,6 +29,7 @@ export function CategoriesPageContent({
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
+  const [isDeleting, setIsDeleting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const updateURL = (updates: { page?: number; pageSize?: number; search?: string }) => {
@@ -84,11 +86,8 @@ export function CategoriesPageContent({
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this category?")) {
-      return
-    }
-
-      startTransition(async () => {
+    setIsDeleting(true)
+    startTransition(async () => {
       try {
         setError(null)
         const result = await deleteCategoryAction(id)
@@ -100,6 +99,8 @@ export function CategoriesPageContent({
         }
       } catch (err) {
         setError("Failed to delete category")
+      } finally {
+        setIsDeleting(false)
       }
     })
   }
@@ -124,6 +125,11 @@ export function CategoriesPageContent({
         setError("Failed to create category")
       }
     })
+  }
+
+  // Show loading skeleton during transitions (but not during delete)
+  if (isPending && !isDeleting) {
+    return <LoadingSkeleton rows={initialPagination.pageSize} />
   }
 
   return (
@@ -157,6 +163,7 @@ export function CategoriesPageContent({
                 onEdit={handleEdit}
                 onDelete={handleDelete}
                 disabled={isPending}
+                isDeleting={isDeleting}
             />
 
             {/* Categories Footer with Pagination */}

@@ -5,8 +5,7 @@
   "workspaces": [
     "packages/**/*"
   ],
-  "scripts": {
-  },
+  "scripts": {},
   "devDependencies": {
     "@tsconfig/node22": "^22",
     "typescript": "^5"

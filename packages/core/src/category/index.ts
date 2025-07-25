@@ -1,7 +1,7 @@
 import {db} from "../mysql";
 import {categoriesTable} from "./category.sql";
 import {and, desc, eq, like, or, sql} from 'drizzle-orm';
-
+import { v7 } from "uuid";
 
 export interface Category {
   id: string
@@ -32,6 +32,20 @@ export namespace Categories {
 
     return db.$count(categoriesTable, search ?
         or(like(categoriesTable.name, search), like(categoriesTable.description, search)) : sql`TRUE`);
+  }
+
+  export async function create(name: string, description: string, image: string, status: string) {
+    const id = v7();
+    await db.insert(categoriesTable).values({
+      id: crypto.randomUUID(),
+      tenant_id: "default", // Assuming a default tenant for simplicity
+      name,
+      description: description || "",
+      image: image || "",
+      status: status || "active",
+    });
+
+    return id;
   }
 
   export function update(id: string, name: string, description: string, image: string, status: string) {

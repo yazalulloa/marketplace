@@ -15,6 +15,8 @@ export async function GET(request: NextRequest) {
     const categories = await Categories.list(search, pageSize, offset);
     const total = await Categories.count(search);
 
+    console.log("Fetched categories:", categories)
+
     return NextResponse.json({
       categories,
       pagination: {
@@ -31,25 +33,21 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  throw new Error("Method not implemented. Use POST /api/categories/[id] for creating categories.")
-  // try {
-  //   const body = await request.json()
-  //   const {name, description, image, status} = body
-  //
-  //   if (!name) {
-  //     return NextResponse.json({error: "Name is required"}, {status: 400})
-  //   }
-  //
-  //   const [result] = (await pool.execute(
-  //       "INSERT INTO categories (name, description, image, status) VALUES (?, ?, ?, ?)",
-  //       [name, description || "", image || "", status || "active"],
-  //   )) as any[]
-  //
-  //   const [newCategory] = await pool.execute("SELECT * FROM categories WHERE id = ?", [result.insertId])
-  //
-  //   return NextResponse.json(newCategory[0], {status: 201})
-  // } catch (error) {
-  //   console.error("Database error:", error)
-  //   return NextResponse.json({error: "Failed to create category"}, {status: 500})
-  // }
+
+  try {
+    const body = await request.json()
+    const {name, description, image, status} = body
+
+    if (!name) {
+      return NextResponse.json({error: "Name is required"}, {status: 400})
+    }
+
+    const id = await Categories.create(name, description || "", image || "", status || "active")
+    const newCategory = await Categories.getById(id);
+
+    return NextResponse.json(newCategory, {status: 201})
+  } catch (error) {
+    console.error("Database error:", error)
+    return NextResponse.json({error: "Failed to create category"}, {status: 500})
+  }
 }

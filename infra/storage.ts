@@ -44,6 +44,7 @@ if (!$dev) {
 new sst.x.DevCommand("Studio", {
   link: [database],
   dev: {
+    directory: "packages/core",
     command: "bunx drizzle-kit studio",
   },
 });

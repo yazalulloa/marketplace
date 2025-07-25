@@ -5,10 +5,6 @@
 
 declare module "sst" {
   export interface Resource {
-    "API": {
-      "type": "sst.aws.ApiGatewayV2"
-      "url": string
-    }
     "BcvBucket": {
       "name": string
       "type": "sst.aws.Bucket"
@@ -53,10 +49,6 @@ declare module "sst" {
     }
     "MyVpc": {
       "type": "sst.aws.Vpc"
-    }
-    "OldWebApp": {
-      "type": "sst.aws.StaticSite"
-      "url": string
     }
     "ProcessBcvFile": {
       "name": string

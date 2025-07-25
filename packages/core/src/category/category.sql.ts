@@ -1,6 +1,6 @@
-import {mysqlTable, serial, text, varchar, timestamp} from "drizzle-orm/mysql-core";
+import {mysqlTable, text, timestamp, varchar} from "drizzle-orm/mysql-core";
 
-export const categories = mysqlTable("categories", {
+export const categoriesTable = mysqlTable("categories", {
   id: varchar({length: 128}).primaryKey().notNull(),
   tenant_id: varchar({length: 128}).notNull(),
   name: varchar({length: 255}).notNull(),

@@ -8,9 +8,15 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 
 module.exports = {
-  images: {
-    remotePatterns: [new URL('https://tiendasdaka.com/**')],
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
   },
+  // Works in DEV but not in production
+  // images: {
+  //   remotePatterns: [new URL('https://tiendasdaka.com/**')],
+  // },
   eslint: {
     ignoreDuringBuilds: true,
   },

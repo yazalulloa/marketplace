@@ -23,12 +23,12 @@ export const database = new sst.aws.Mysql("MyDatabase", {
 });
 
 const migrator = new sst.aws.Function("DatabaseMigrator", {
-  handler: "src/migrator.handler",
+  handler: "packages/functions/src/migrator.handler",
   link: [database],
   vpc,
   copyFiles: [
     {
-      from: "migrations",
+      from: "packages/core/migrations",
       to: "./migrations",
     },
   ],

@@ -1,8 +1,5 @@
 import {type NextRequest, NextResponse} from "next/server"
-
-import * as schema from '@/lib/model/schema.sql';
-import {eq} from 'drizzle-orm';
-import {db} from "@marketplace/core/mysql"
+import {Categories} from "@marketplace/core/category";
 
 
 export async function PUT(request: NextRequest,
@@ -16,18 +13,11 @@ export async function PUT(request: NextRequest,
       return NextResponse.json({error: "Name is required"}, {status: 400})
     }
 
-    await db.update(schema.categories)
-    .set({
-      name,
-      description: description || "",
-      image: image || "",
-      status: status || "active",
-    })
-    .where(eq(schema.categories.id, id))
+    await Categories.update(id, name, description || "", image || "", status || "active")
 
-    const updatedCategory = await db.select().from(schema.categories).where(eq(schema.categories.id, id))
+    const updatedCategory = await Categories.getById(id)
 
-    return NextResponse.json(updatedCategory[0])
+    return NextResponse.json(updatedCategory)
   } catch (error) {
     console.error("Database error:", error)
     return NextResponse.json({error: "Failed to update category"}, {status: 500})
@@ -38,8 +28,7 @@ export async function DELETE(/*request: NextRequest,*/ {params}: { params: { id:
   try {
     const id = params.id
 
-
-    const result = await db.delete(schema.categories).where(eq(schema.categories.id, id))
+    const result = await Categories.deleteById(id)
 
     console.log("Delete result:", result)
 

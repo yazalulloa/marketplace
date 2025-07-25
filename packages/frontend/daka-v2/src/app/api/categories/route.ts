@@ -1,8 +1,5 @@
 import {type NextRequest, NextResponse} from "next/server"
-
-import * as schema from '@/lib/model/schema.sql';
-import {and, desc, like, or, sql} from 'drizzle-orm';
-import {db} from "@marketplace/core/mysql"
+import {Categories} from "@marketplace/core/category";
 
 export async function GET(request: NextRequest) {
 
@@ -15,16 +12,8 @@ export async function GET(request: NextRequest) {
 
     const offset = (page - 1) * pageSize
 
-    const [categories] = await db.select().from(schema.categories).where(
-        and(
-            search ? or(like(schema.categories.name, search), like(schema.categories.description, search)) : sql`TRUE`
-        )
-    ).orderBy(desc(schema.categories.created_at))
-    .limit(pageSize).offset(offset);
-
-
-    const total = await db.$count(schema.categories, search ?
-        or(like(schema.categories.name, search), like(schema.categories.description, search)) : sql`TRUE`);
+    const categories = await Categories.list(search, pageSize, offset);
+    const total = await Categories.count(search);
 
     return NextResponse.json({
       categories,

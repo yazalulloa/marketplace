@@ -1,21 +1,27 @@
-import { Search } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import {Search} from "lucide-react"
+import {Button} from "@/components/ui/button"
+import {Input} from "@/components/ui/input"
 import Image from 'next/image'
 
 export function TopBar() {
   return (
-      <header className="sticky top-0 z-50 w-full border-b bg-brand-yellow/95 backdrop-blur supports-[backdrop-filter]:bg-brand-yellow/90 shadow-sm">
+      <header
+          className="sticky top-0 z-50 w-full border-b bg-brand-yellow/95 backdrop-blur supports-[backdrop-filter]:bg-brand-yellow/90 shadow-sm">
         <div className="container flex h-16 items-center justify-between px-4">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <img src="https://tiendasdaka.com/img/logoF.webp" alt="logo" className="h-13 w-20"/>
+            <Image
+                src="/logo.webp"
+                alt="logo"
+                width={50}
+                height={50}
+            />
           </div>
 
           {/* Search Bar */}
           <div className="flex flex-1 items-center justify-center px-4">
             <div className="relative w-full max-w-sm">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-brand-blue/70" />
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-brand-blue/70"/>
               <Input
                   type="search"
                   placeholder="Search..."

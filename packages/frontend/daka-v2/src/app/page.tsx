@@ -1,4 +1,5 @@
 import {TopBar} from "../components/ui/top-bar";
+import Image from 'next/image'
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
           <div
               className="absolute w-full h-full inset-0 bg-contain bg-center bg-no-repeat"
               style={{
-                backgroundImage: "url(https://tiendasdaka.com/img/banner/banner/B1.webp)",
+                backgroundImage: "url(/banner.webp)",
                 backgroundPosition: "center top",
                 backgroundRepeat: "no-repeat",
                 top: "0",

@@ -59,33 +59,33 @@ export const golangApi = new sst.aws.Function("GolangApi", {
   link: [database],
 })
 
-const api = new sst.aws.ApiGatewayV2("API", {
-  // domain: {
-  //   name: apiDomain,
-  //   dns: sst.aws.dns({override: true}),
-  // },
-  vpc,
-  accessLog: {
-    retention: "1 month",
-  },
-  cors: {
-    allowOrigins: allowedOrigins,
-    allowMethods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
-    allowHeaders: [
-      "Authorization",
-      "Content-Type",
-      "hx-current-url",
-      "hx-request",
-      "hx-trigger",
-      "hx-target",
-      "Location",
-      "X-Recaptcha-Token",
-    ],
-    // allowCredentials: true,
-    maxAge: isLocal ? "1 minute" : "1 day",
-    exposeHeaders: ["HX-Redirect", "hx-location", "hx-trigger"],
-  },
-});
+// const api = new sst.aws.ApiGatewayV2("API", {
+//   // domain: {
+//   //   name: apiDomain,
+//   //   dns: sst.aws.dns({override: true}),
+//   // },
+//   vpc,
+//   accessLog: {
+//     retention: "1 month",
+//   },
+//   cors: {
+//     allowOrigins: allowedOrigins,
+//     allowMethods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
+//     allowHeaders: [
+//       "Authorization",
+//       "Content-Type",
+//       "hx-current-url",
+//       "hx-request",
+//       "hx-trigger",
+//       "hx-target",
+//       "Location",
+//       "X-Recaptcha-Token",
+//     ],
+//     // allowCredentials: true,
+//     maxAge: isLocal ? "1 minute" : "1 day",
+//     exposeHeaders: ["HX-Redirect", "hx-location", "hx-trigger"],
+//   },
+// });
 
 // myRouter.route("/api", api.url);
 // api.route("GET /api/g/{proxy+}", golangApi.arn);
@@ -111,7 +111,6 @@ new sst.aws.Nextjs("DakaApp", {
   },
   environment: {
     APP_IS_DEV: isLocal.toString(),
-    APP_API_URL: api.url,
   },
   link: [database],
   transform: {
@@ -126,44 +125,44 @@ new sst.aws.Nextjs("DakaApp", {
   },
 });
 
-export const oldWebApp = new sst.aws.StaticSite("OldWebApp", {
-  path: "packages/frontend/daka",
-  router: {
-    instance: myRouter,
-    // domain: subdomain("kyo-bot"),
-  },
-  environment: {
-    VITE_IS_DEV: isLocal.toString(),
-    VITE_GOLANG_API_URL: api.url,
-    // VITE_JAVA_API_URL: isLocal ? javaService.url : undefined,
-  },
-  build: {
-    command: "bun run build",
-    output: "dist",
-  },
-  assets: {
-    bucket: webAssetsBucket.name,
-    fileOptions: [
-      {
-        files: "index.html",
-        cacheControl: "max-age=0,no-cache,must-revalidate,public"
-      },
-      {
-        files: ["**/*"],
-        ignore: ["index.html", "isr/**/*"],
-        cacheControl: "public,max-age=31536000,immutable",
-      },
-    ],
-  },
-  transform: {
-    cdn: (args) => {
-
-      args.transform = {
-        distribution: (disArgs) => {
-          disArgs.httpVersion = "http2and3";
-        }
-
-      }
-    }
-  },
-});
+// export const oldWebApp = new sst.aws.StaticSite("OldWebApp", {
+//   path: "packages/frontend/daka",
+//   router: {
+//     instance: myRouter,
+//     // domain: subdomain("kyo-bot"),
+//   },
+//   environment: {
+//     VITE_IS_DEV: isLocal.toString(),
+//     VITE_GOLANG_API_URL: api.url,
+//     // VITE_JAVA_API_URL: isLocal ? javaService.url : undefined,
+//   },
+//   build: {
+//     command: "bun run build",
+//     output: "dist",
+//   },
+//   assets: {
+//     bucket: webAssetsBucket.name,
+//     fileOptions: [
+//       {
+//         files: "index.html",
+//         cacheControl: "max-age=0,no-cache,must-revalidate,public"
+//       },
+//       {
+//         files: ["**/*"],
+//         ignore: ["index.html", "isr/**/*"],
+//         cacheControl: "public,max-age=31536000,immutable",
+//       },
+//     ],
+//   },
+//   transform: {
+//     cdn: (args) => {
+//
+//       args.transform = {
+//         distribution: (disArgs) => {
+//           disArgs.httpVersion = "http2and3";
+//         }
+//
+//       }
+//     }
+//   },
+// });

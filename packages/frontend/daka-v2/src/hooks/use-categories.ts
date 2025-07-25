@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import type { Category } from "@/lib/model/categories"
+import {useEffect, useState} from "react"
+import type {Category} from "@marketplace/core/category"
 
 interface UseCategoriesParams {
   page: number
@@ -19,7 +19,7 @@ interface CategoriesResponse {
   }
 }
 
-export function useCategories({ page, pageSize, search }: UseCategoriesParams) {
+export function useCategories({page, pageSize, search}: UseCategoriesParams) {
   const [data, setData] = useState<CategoriesResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
